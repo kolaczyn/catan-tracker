@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
   content: {
     marginTop: 24,
     flex: 1,
-    padding: 32,
+    padding: 18,
     gap: 16,
     overflow: "hidden",
   },

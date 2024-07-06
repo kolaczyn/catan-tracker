@@ -69,17 +69,16 @@ export default function HomeScreen() {
     return 0;
   }, [wealthStatus]);
 
-  const victoryPoints = Math.max(
+  const victoryPoints =
     villages +
-      2 * towns +
-      wealthPoints +
-      2 * boolToInt(isLongestRoad) +
-      2 * boolToInt(isMostKnights) +
-      2 * boolToInt(isMostPorts) +
-      victoryPointsFromCards +
-      -1 * boolToInt(isShoe),
-    0,
-  );
+    2 * towns +
+    wealthPoints +
+    2 * boolToInt(isLongestRoad) +
+    2 * boolToInt(isMostKnights) +
+    2 * boolToInt(isMostPorts) +
+    victoryPointsFromCards +
+    -1 * boolToInt(isShoe);
+
   const didWin = victoryPoints >= max;
 
   return (
@@ -88,35 +87,35 @@ export default function HomeScreen() {
         <ThemedText type="title">Punkty zwycięstwa</ThemedText>
       </ThemedView>
 
-      <ThemedText>Osady ({villages})</ThemedText>
-      <Slider
-        style={{ width: 200, height: 40 }}
-        value={villages}
-        onValueChange={setVillages}
-        minimumValue={0}
-        step={1}
-        maximumValue={MAX_VILLAGES}
-      />
-      <Button
-        disabled={!canBuildVillage}
-        onPress={buildVillage}
-        title="Buduj osadę"
-      />
+      <View style={styles.build}>
+        <ThemedText>Osady ({villages})</ThemedText>
+        <Slider
+          style={{ width: 200, height: 40 }}
+          value={villages}
+          onValueChange={setVillages}
+          minimumValue={0}
+          step={1}
+          maximumValue={MAX_VILLAGES}
+        />
+        <Button
+          disabled={!canBuildVillage}
+          onPress={buildVillage}
+          title="Buduj"
+        />
+      </View>
 
-      <ThemedText>Miasta ({towns})</ThemedText>
-      <Slider
-        style={{ width: 200, height: 40 }}
-        value={towns}
-        onValueChange={setTowns}
-        minimumValue={0}
-        step={1}
-        maximumValue={MAX_TOWNS}
-      />
-      <Button
-        disabled={!canBuildTown}
-        onPress={buildTown}
-        title="Buduj miasto"
-      />
+      <View style={styles.build}>
+        <ThemedText>Miasta ({towns})</ThemedText>
+        <Slider
+          style={{ width: 200, height: 40 }}
+          value={towns}
+          onValueChange={setTowns}
+          minimumValue={0}
+          step={1}
+          maximumValue={MAX_TOWNS}
+        />
+        <Button disabled={!canBuildTown} onPress={buildTown} title="Buduj" />
+      </View>
 
       <ThemedText>Punktów zwycięstwa do wygrania ({max})</ThemedText>
       <Slider
@@ -128,44 +127,46 @@ export default function HomeScreen() {
         maximumValue={20}
       />
 
-      <View style={{ flexDirection: "row", gap: 12, alignItems: "center" }}>
-        <Switch
-          trackColor={{ false: "#767577", true: "#81b0ff" }}
-          ios_backgroundColor="#3e3e3e"
-          onValueChange={setIsShoe}
-          value={isShoe}
-        />
-        <ThemedText>But</ThemedText>
-      </View>
+      <View style={{ flexWrap: "wrap", flexDirection: "row" }}>
+        <View style={styles.gridItem}>
+          <Switch
+            trackColor={{ false: "#767577", true: "#81b0ff" }}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={setIsShoe}
+            value={isShoe}
+          />
+          <ThemedText>But</ThemedText>
+        </View>
 
-      <View style={{ flexDirection: "row", gap: 12, alignItems: "center" }}>
-        <Switch
-          trackColor={{ false: "#767577", true: "#81b0ff" }}
-          ios_backgroundColor="#3e3e3e"
-          onValueChange={setIsLongestRoad}
-          value={isLongestRoad}
-        />
-        <ThemedText>Najwięcej dróg</ThemedText>
-      </View>
+        <View style={styles.gridItem}>
+          <Switch
+            trackColor={{ false: "#767577", true: "#81b0ff" }}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={setIsLongestRoad}
+            value={isLongestRoad}
+          />
+          <ThemedText>Drogi</ThemedText>
+        </View>
 
-      <View style={{ flexDirection: "row", gap: 12, alignItems: "center" }}>
-        <Switch
-          trackColor={{ false: "#767577", true: "#81b0ff" }}
-          ios_backgroundColor="#3e3e3e"
-          onValueChange={setIsMostKnights}
-          value={isMostKnights}
-        />
-        <ThemedText>Najwięcej rycerzy</ThemedText>
-      </View>
+        <View style={styles.gridItem}>
+          <Switch
+            trackColor={{ false: "#767577", true: "#81b0ff" }}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={setIsMostKnights}
+            value={isMostKnights}
+          />
+          <ThemedText>Rycerze</ThemedText>
+        </View>
 
-      <View style={{ flexDirection: "row", gap: 12, alignItems: "center" }}>
-        <Switch
-          trackColor={{ false: "#767577", true: "#81b0ff" }}
-          ios_backgroundColor="#3e3e3e"
-          onValueChange={setIsMostPorts}
-          value={isMostPorts}
-        />
-        <ThemedText>Najwięcej portów</ThemedText>
+        <View style={styles.gridItem}>
+          <Switch
+            trackColor={{ false: "#767577", true: "#81b0ff" }}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={setIsMostPorts}
+            value={isMostPorts}
+          />
+          <ThemedText>Porty</ThemedText>
+        </View>
       </View>
 
       <ThemedText>
@@ -180,7 +181,7 @@ export default function HomeScreen() {
         maximumValue={3}
       />
 
-      <ThemedText>Bogactwo</ThemedText>
+      <ThemedText>Bogactwo ({wealthPoints})</ThemedText>
       <RadioGroup
         radioButtons={radioButtons}
         layout="row"
@@ -191,24 +192,40 @@ export default function HomeScreen() {
         selectedId={wealthStatus}
       />
 
-      <ThemedText>Punkty zwycięstwa: {victoryPoints}</ThemedText>
-      {didWin ? (
-        <ThemedText>Masz {victoryPoints}. Wygrałeś!</ThemedText>
-      ) : (
-        <ThemedText>Brakuje: {max - victoryPoints}</ThemedText>
-      )}
+      <ThemedText style={styles.bigText}>
+        Punkty zwycięstwa: {victoryPoints}
+      </ThemedText>
+      <ThemedText style={styles.bigText}>
+        {didWin ? "Wygrałeś!" : `Brakuje: ${max - victoryPoints}`}
+      </ThemedText>
     </AppContainer>
   );
 }
 
 const styles = StyleSheet.create({
+  build: {
+    flexDirection: "row",
+    gap: 8,
+    alignItems: "center",
+  },
   titleContainer: {
     flexDirection: "row",
     alignItems: "center",
     gap: 8,
   },
+  gridItem: {
+    flexDirection: "row",
+    gap: 8,
+    marginTop: 8,
+    alignItems: "center",
+    width: "50%",
+  },
   stepContainer: {
     gap: 8,
     marginBottom: 8,
+  },
+  bigText: {
+    fontWeight: "bold",
+    fontSize: 24,
   },
 });
