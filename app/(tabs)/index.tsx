@@ -139,7 +139,7 @@ export const BaseScreen = ({ label }: Props) => {
             onValueChange={setIsShoe}
             value={isShoe}
           />
-          <ThemedText>But</ThemedText>
+          <ThemedText>But {isShoe ? "(-1)" : ""}</ThemedText>
         </View>
 
         <View style={styles.gridItem}>
@@ -149,7 +149,7 @@ export const BaseScreen = ({ label }: Props) => {
             onValueChange={setIsLongestRoad}
             value={isLongestRoad}
           />
-          <ThemedText>Drogi</ThemedText>
+          <ThemedText>Drogi {isLongestRoad ? "(+2)" : ""}</ThemedText>
         </View>
 
         <View style={styles.gridItem}>
@@ -159,7 +159,7 @@ export const BaseScreen = ({ label }: Props) => {
             onValueChange={setIsMostKnights}
             value={isMostKnights}
           />
-          <ThemedText>Rycerze</ThemedText>
+          <ThemedText>Rycerze {isMostKnights ? "(+2)" : ""}</ThemedText>
         </View>
 
         <View style={styles.gridItem}>
@@ -169,7 +169,7 @@ export const BaseScreen = ({ label }: Props) => {
             onValueChange={setIsMostPorts}
             value={isMostPorts}
           />
-          <ThemedText>Porty</ThemedText>
+          <ThemedText>Porty {isMostPorts ? "(+2)" : ""}</ThemedText>
         </View>
       </View>
 
