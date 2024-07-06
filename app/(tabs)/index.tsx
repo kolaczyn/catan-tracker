@@ -38,7 +38,11 @@ const vibrate = () => {
   Haptics.impactAsync(ImpactFeedbackStyle.Soft);
 };
 
-export default function HomeScreen() {
+type Props = {
+  label: string;
+};
+
+export const BaseScreen = ({ label }: Props) => {
   const [villages, setVillages] = useState(0);
   const [towns, setTowns] = useState(0);
   const [max, setMax] = useState(10);
@@ -84,7 +88,7 @@ export default function HomeScreen() {
   return (
     <AppContainer>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Punkty zwycięstwa</ThemedText>
+        <ThemedText type="title">Punkty {label}</ThemedText>
       </ThemedView>
 
       <View style={styles.build}>
@@ -200,7 +204,10 @@ export default function HomeScreen() {
       </ThemedText>
     </AppContainer>
   );
-}
+};
+
+const BlueScreen = () => <BaseScreen label="Niebieski" />;
+export default BlueScreen;
 
 const styles = StyleSheet.create({
   build: {
