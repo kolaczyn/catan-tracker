@@ -1,6 +1,6 @@
 import { Button, Image, StyleSheet, Switch, View } from "react-native";
 
-import ParallaxScrollView from "@/components/ParallaxScrollView";
+import AppContainer from "@/components/AppContainer";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import Slider from "@react-native-community/slider";
@@ -83,15 +83,7 @@ export default function HomeScreen() {
   const didWin = victoryPoints >= max;
 
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
-      headerImage={
-        <Image
-          source={require("@/assets/images/partial-react-logo.png")}
-          style={styles.reactLogo}
-        />
-      }
-    >
+    <AppContainer>
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Punkty zwycięstwa</ThemedText>
       </ThemedView>
@@ -136,39 +128,45 @@ export default function HomeScreen() {
         maximumValue={20}
       />
 
-      <View>
-        <ThemedText>But</ThemedText>
+      <View style={{ flexDirection: "row", gap: 12, alignItems: "center" }}>
         <Switch
           trackColor={{ false: "#767577", true: "#81b0ff" }}
           ios_backgroundColor="#3e3e3e"
           onValueChange={setIsShoe}
           value={isShoe}
         />
+        <ThemedText>But</ThemedText>
       </View>
 
-      <ThemedText>Najwięcej dróg</ThemedText>
-      <Switch
-        trackColor={{ false: "#767577", true: "#81b0ff" }}
-        ios_backgroundColor="#3e3e3e"
-        onValueChange={setIsLongestRoad}
-        value={isLongestRoad}
-      />
+      <View style={{ flexDirection: "row", gap: 12, alignItems: "center" }}>
+        <Switch
+          trackColor={{ false: "#767577", true: "#81b0ff" }}
+          ios_backgroundColor="#3e3e3e"
+          onValueChange={setIsLongestRoad}
+          value={isLongestRoad}
+        />
+        <ThemedText>Najwięcej dróg</ThemedText>
+      </View>
 
-      <ThemedText>Najwięcej rycerzy</ThemedText>
-      <Switch
-        trackColor={{ false: "#767577", true: "#81b0ff" }}
-        ios_backgroundColor="#3e3e3e"
-        onValueChange={setIsMostKnights}
-        value={isMostKnights}
-      />
+      <View style={{ flexDirection: "row", gap: 12, alignItems: "center" }}>
+        <Switch
+          trackColor={{ false: "#767577", true: "#81b0ff" }}
+          ios_backgroundColor="#3e3e3e"
+          onValueChange={setIsMostKnights}
+          value={isMostKnights}
+        />
+        <ThemedText>Najwięcej rycerzy</ThemedText>
+      </View>
 
-      <ThemedText>Najwięcej portów</ThemedText>
-      <Switch
-        trackColor={{ false: "#767577", true: "#81b0ff" }}
-        ios_backgroundColor="#3e3e3e"
-        onValueChange={setIsMostPorts}
-        value={isMostPorts}
-      />
+      <View style={{ flexDirection: "row", gap: 12, alignItems: "center" }}>
+        <Switch
+          trackColor={{ false: "#767577", true: "#81b0ff" }}
+          ios_backgroundColor="#3e3e3e"
+          onValueChange={setIsMostPorts}
+          value={isMostPorts}
+        />
+        <ThemedText>Najwięcej portów</ThemedText>
+      </View>
 
       <ThemedText>
         Punktów zwycięstwa z kart {victoryPointsFromCards}
@@ -199,7 +197,7 @@ export default function HomeScreen() {
       ) : (
         <ThemedText>Brakuje: {max - victoryPoints}</ThemedText>
       )}
-    </ParallaxScrollView>
+    </AppContainer>
   );
 }
 
@@ -209,16 +207,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 8,
   },
-  radioButtons: {},
   stepContainer: {
     gap: 8,
     marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: "absolute",
   },
 });
