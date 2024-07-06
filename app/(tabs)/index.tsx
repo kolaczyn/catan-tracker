@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Switch, Button } from "react-native";
+import { Button, Image, StyleSheet, Switch, View } from "react-native";
 
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
@@ -6,6 +6,8 @@ import { ThemedView } from "@/components/ThemedView";
 import Slider from "@react-native-community/slider";
 import { useMemo, useState } from "react";
 import RadioGroup from "react-native-radio-buttons-group";
+import * as Haptics from "expo-haptics";
+import { ImpactFeedbackStyle } from "expo-haptics";
 
 type WealthStatus = "poor" | "neutral" | "rich";
 
@@ -32,6 +34,10 @@ const MAX_TOWNS = 4;
 
 const boolToInt = (x: boolean) => (x ? 1 : 0);
 
+const vibrate = () => {
+  Haptics.impactAsync(ImpactFeedbackStyle.Soft);
+};
+
 export default function HomeScreen() {
   const [villages, setVillages] = useState(0);
   const [towns, setTowns] = useState(0);
@@ -45,6 +51,7 @@ export default function HomeScreen() {
 
   const buildVillage = () => {
     setVillages(villages + 1);
+    vibrate();
   };
 
   const canBuildVillage = villages < MAX_VILLAGES;
@@ -53,6 +60,7 @@ export default function HomeScreen() {
   const buildTown = () => {
     setTowns((prev) => prev + 1);
     setVillages((prev) => prev - 1);
+    vibrate();
   };
 
   const wealthPoints = useMemo(() => {
@@ -128,13 +136,15 @@ export default function HomeScreen() {
         maximumValue={20}
       />
 
-      <ThemedText>But</ThemedText>
-      <Switch
-        trackColor={{ false: "#767577", true: "#81b0ff" }}
-        ios_backgroundColor="#3e3e3e"
-        onValueChange={setIsShoe}
-        value={isShoe}
-      />
+      <View>
+        <ThemedText>But</ThemedText>
+        <Switch
+          trackColor={{ false: "#767577", true: "#81b0ff" }}
+          ios_backgroundColor="#3e3e3e"
+          onValueChange={setIsShoe}
+          value={isShoe}
+        />
+      </View>
 
       <ThemedText>Najwięcej dróg</ThemedText>
       <Switch
