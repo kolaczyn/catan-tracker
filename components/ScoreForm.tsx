@@ -13,48 +13,27 @@ import { SliderSection } from "@/components/SliderSection";
 import { VictorySection } from "@/components/VictorySection";
 import { BuildingSection } from "@/components/BuildingSection";
 import { radioButtons } from "@/constants/radioButtons";
+import { usePlayerStore } from "@/state/PlayerStore";
+import { calcVictoryPoints } from "@/utils/calcVictoryPoints";
 
 type Props = {
   label: string;
 };
 
 export const ScoreForm = ({ label }: Props) => {
-  const [villages, setVillages] = useState(0);
-  const [towns, setTowns] = useState(0);
-  const [max, setMax] = useState(10);
-  const [isShoe, setIsShoe] = useState(false);
-  const [isLongestRoad, setIsLongestRoad] = useState(false);
-  const [isMostKnights, setIsMostKnights] = useState(false);
-  const [isMostPorts, setIsMostPorts] = useState(false);
-  const [victoryPointsFromCards, setVictoryPointsFromCards] = useState(0);
-  const [wealthStatus, setWealthStatus] = useState<WealthStatus>("neutral");
+  const state = usePlayerStore();
 
   const buildVillage = () => {
-    setVillages((prev) => prev + 1);
+    state.buildVillage();
     vibrate();
   };
 
   const buildTown = () => {
-    setTowns((prev) => prev + 1);
-    setVillages((prev) => prev - 1);
+    state.buildTown();
     vibrate();
   };
 
-  const wealthPoints = useMemo(() => {
-    if (wealthStatus === "poor") return -2;
-    if (wealthStatus === "rich") return 1;
-    return 0;
-  }, [wealthStatus]);
-
-  const victoryPoints =
-    villages +
-    2 * towns +
-    wealthPoints +
-    2 * boolToInt(isLongestRoad) +
-    2 * boolToInt(isMostKnights) +
-    2 * boolToInt(isMostPorts) +
-    victoryPointsFromCards +
-    -1 * boolToInt(isShoe);
+  const victoryPoints = calcVictoryPoints(state);
 
   return (
     <AppContainer>
@@ -63,73 +42,73 @@ export const ScoreForm = ({ label }: Props) => {
       </ThemedView>
 
       <BuildingSection
-        value={villages}
-        setValue={setVillages}
+        value={state.villages}
+        setValue={state.setVillages}
         build={buildVillage}
         type="village"
       />
       <BuildingSection
-        value={towns}
-        setValue={setTowns}
+        value={state.towns}
+        setValue={state.setTowns}
         build={buildTown}
         type="town"
       />
 
       <SliderSection
-        label={`Punktów zwycięstwa do wygrania (${victoryPointsFromCards})`}
-        value={max}
-        onValueChange={setMax}
+        label={`Punktów zwycięstwa do wygrania (${state.max})`}
+        value={state.max}
+        onValueChange={state.setMax}
         minimumValue={0}
         maximumValue={20}
       />
 
       <View style={{ flexWrap: "wrap", flexDirection: "row" }}>
         <SwitchSection
-          onValueChange={setIsShoe}
-          value={isShoe}
+          onValueChange={state.setIsShoe}
+          value={state.isShoe}
           label="But"
           modifier="-1"
         />
         <SwitchSection
-          onValueChange={setIsLongestRoad}
-          value={isLongestRoad}
+          onValueChange={state.setIsLongestRoad}
+          value={state.isLongestRoad}
           label="Drogi"
           modifier="+2"
         />
         <SwitchSection
-          onValueChange={setIsMostKnights}
-          value={isMostKnights}
+          onValueChange={state.setIsMostKnights}
+          value={state.isMostKnights}
           label="Rycerze"
           modifier="+2"
         />
         <SwitchSection
-          onValueChange={setIsMostPorts}
-          value={isMostPorts}
+          onValueChange={state.setIsMostPorts}
+          value={state.isMostPorts}
           label="Porty"
           modifier="+2"
         />
       </View>
 
       <SliderSection
-        label={`Punktów zwycięstwa z kart (${victoryPointsFromCards})`}
-        value={victoryPointsFromCards}
-        onValueChange={setVictoryPointsFromCards}
+        label={`Punktów zwycięstwa z kart (${state.victoryPointsFromCards})`}
+        value={state.victoryPointsFromCards}
+        onValueChange={state.setVictoryPointsFromCards}
         minimumValue={0}
         maximumValue={3}
       />
 
-      <ThemedText>Bogactwo ({wealthPoints})</ThemedText>
+      <ThemedText>Bogactwo ({state.getWealthPoints()})</ThemedText>
       <RadioGroup
         radioButtons={radioButtons}
         layout="row"
         containerStyle={{
           backgroundColor: "white",
         }}
-        onPress={(x) => setWealthStatus(x as WealthStatus)}
-        selectedId={wealthStatus}
+        onPress={(x) => state.setWealthStatus(x as WealthStatus)}
+        selectedId={state.wealthStatus}
       />
 
-      <VictorySection max={max} victoryPoints={victoryPoints} />
+      <VictorySection max={state.max} victoryPoints={victoryPoints} />
     </AppContainer>
   );
 };
