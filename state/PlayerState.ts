@@ -25,4 +25,5 @@ export type PlayerState = {
   setWealthStatus: (wealthStatus: WealthStatus) => void;
 
   getWealthPoints: () => number;
+  getVictoryPoints: () => number;
 };

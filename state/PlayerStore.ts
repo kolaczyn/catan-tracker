@@ -1,6 +1,7 @@
 import { create, StoreApi, UseBoundStore } from "zustand";
 import { PlayerState } from "@/state/PlayerState";
 import { Player } from "@/types/Player";
+import { boolToInt } from "@/utils/boolToInt";
 
 export const createPlayerStore = () =>
   create<PlayerState>()((set, get) => ({
@@ -53,14 +54,29 @@ export const createPlayerStore = () =>
     },
 
     getWealthPoints() {
-      const wealthStatus = get().wealthStatus;
+      const { wealthStatus } = get();
       if (wealthStatus === "poor") return -2;
       if (wealthStatus === "rich") return 1;
       return 0;
     },
+
+    getVictoryPoints() {
+      const s = get();
+
+      return (
+        s.villages +
+        2 * s.towns +
+        s.getWealthPoints() +
+        2 * boolToInt(s.isLongestRoad) +
+        2 * boolToInt(s.isMostKnights) +
+        2 * boolToInt(s.isMostPorts) +
+        s.victoryPointsFromCards +
+        -1 * boolToInt(s.isShoe)
+      );
+    },
   }));
 
-export const useBluePlayerStore = createPlayerStore();
+const useBluePlayerStore = createPlayerStore();
 const useOrangePlayerStore = createPlayerStore();
 const useWhitePlayerStore = createPlayerStore();
 const useRedPlayerStore = createPlayerStore();

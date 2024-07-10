@@ -12,8 +12,8 @@ import { VictorySection } from "@/components/VictorySection";
 import { BuildingSection } from "@/components/BuildingSection";
 import { radioButtons } from "@/constants/radioButtons";
 import { playerStore } from "@/state/PlayerStore";
-import { calcVictoryPoints } from "@/utils/calcVictoryPoints";
 import { Player } from "@/types/Player";
+import { GameRanking } from "@/components/GameRanking";
 
 type Props = {
   player: Player;
@@ -33,7 +33,7 @@ export const ScoreForm = ({ player, label }: Props) => {
     vibrate();
   };
 
-  const victoryPoints = calcVictoryPoints(state);
+  const victoryPoints = state.getVictoryPoints();
 
   return (
     <AppContainer>
@@ -109,6 +109,7 @@ export const ScoreForm = ({ player, label }: Props) => {
       />
 
       <VictorySection max={state.max} victoryPoints={victoryPoints} />
+      <GameRanking />
     </AppContainer>
   );
 };
