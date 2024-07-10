@@ -7,7 +7,6 @@ export const createPlayerStore = () =>
   create<PlayerState>()((set, get) => ({
     villages: 0,
     towns: 0,
-    max: 10,
     isLongestRoad: false,
     isMostKnights: false,
     isMostPorts: false,
@@ -30,9 +29,6 @@ export const createPlayerStore = () =>
     },
     setVillages: (villages) => {
       set({ villages });
-    },
-    setMax: (max) => {
-      set({ max });
     },
     setIsShoe: (isShoe) => {
       set({ isShoe });

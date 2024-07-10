@@ -22,12 +22,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  header: {
-    height: 250,
-    overflow: "hidden",
-  },
   content: {
-    marginTop: 24,
+    marginTop: 48,
     flex: 1,
     padding: 18,
     gap: 16,

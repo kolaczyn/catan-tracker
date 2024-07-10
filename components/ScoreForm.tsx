@@ -54,14 +54,6 @@ export const ScoreForm = ({ player, label }: Props) => {
         type="town"
       />
 
-      <SliderSection
-        label={`Punktów zwycięstwa do wygrania (${state.max})`}
-        value={state.max}
-        onValueChange={state.setMax}
-        minimumValue={0}
-        maximumValue={20}
-      />
-
       <View style={{ flexWrap: "wrap", flexDirection: "row" }}>
         <SwitchSection
           onValueChange={state.setIsShoe}
@@ -108,7 +100,7 @@ export const ScoreForm = ({ player, label }: Props) => {
         selectedId={state.wealthStatus}
       />
 
-      <VictorySection max={state.max} victoryPoints={victoryPoints} />
+      <VictorySection victoryPoints={victoryPoints} />
       <GameRanking />
     </AppContainer>
   );

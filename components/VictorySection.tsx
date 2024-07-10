@@ -1,12 +1,13 @@
 import { View, StyleSheet } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
+import { gameStore } from "@/state/GameStore";
 
 type Props = {
   victoryPoints: number;
-  max: number;
 };
 
-export const VictorySection = ({ victoryPoints, max }: Props) => {
+export const VictorySection = ({ victoryPoints }: Props) => {
+  const max = gameStore().max;
   const didWin = victoryPoints >= max;
   return (
     <View style={styles.spacing}>

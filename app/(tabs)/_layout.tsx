@@ -8,6 +8,11 @@ import { useColorScheme } from "@/hooks/useColorScheme";
 const tabs = [
   {
     name: "index",
+    title: "Ustawienia",
+    color: "white",
+  },
+  {
+    name: "blue",
     title: "Niebieski",
     color: "#62B6CB",
   },
