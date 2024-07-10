@@ -1,42 +1,18 @@
-import { Button, Image, StyleSheet, Switch, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 import AppContainer from "@/components/AppContainer";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
-import Slider from "@react-native-community/slider";
 import { useMemo, useState } from "react";
 import RadioGroup from "react-native-radio-buttons-group";
-import * as Haptics from "expo-haptics";
-import { ImpactFeedbackStyle } from "expo-haptics";
-
-type WealthStatus = "poor" | "neutral" | "rich";
-
-const radioButtons = [
-  {
-    id: "poor",
-    label: "Biedny",
-    value: "poor",
-  },
-  {
-    id: "neutral",
-    label: "Brak",
-    value: "neutral",
-  },
-  {
-    id: "rich",
-    label: "Bogaty",
-    value: "rich",
-  },
-];
-
-const MAX_VILLAGES = 5;
-const MAX_TOWNS = 4;
-
-const boolToInt = (x: boolean) => (x ? 1 : 0);
-
-const vibrate = () => {
-  Haptics.impactAsync(ImpactFeedbackStyle.Soft);
-};
+import { boolToInt } from "@/utils/boolToInt";
+import { vibrate } from "@/utils/vibrate";
+import { WealthStatus } from "@/types/WealthStatus";
+import { SwitchSection } from "@/components/SwitchSection";
+import { SliderSection } from "@/components/SliderSection";
+import { VictorySection } from "@/components/VictorySection";
+import { BuildingSection } from "@/components/BuildingSection";
+import { radioButtons } from "@/constants/radioButtons";
 
 type Props = {
   label: string;
@@ -54,12 +30,9 @@ export const BaseScreen = ({ label }: Props) => {
   const [wealthStatus, setWealthStatus] = useState<WealthStatus>("neutral");
 
   const buildVillage = () => {
-    setVillages(villages + 1);
+    setVillages((prev) => prev + 1);
     vibrate();
   };
-
-  const canBuildVillage = villages < MAX_VILLAGES;
-  const canBuildTown = villages > 0 && towns < MAX_TOWNS;
 
   const buildTown = () => {
     setTowns((prev) => prev + 1);
@@ -83,105 +56,65 @@ export const BaseScreen = ({ label }: Props) => {
     victoryPointsFromCards +
     -1 * boolToInt(isShoe);
 
-  const didWin = victoryPoints >= max;
-
   return (
     <AppContainer>
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Punkty {label}</ThemedText>
       </ThemedView>
 
-      <View style={styles.build}>
-        <ThemedText>Osady ({villages})</ThemedText>
-        <Slider
-          style={{ width: 200, height: 40 }}
-          value={villages}
-          onValueChange={setVillages}
-          minimumValue={0}
-          step={1}
-          maximumValue={MAX_VILLAGES}
-        />
-        <Button
-          disabled={!canBuildVillage}
-          onPress={buildVillage}
-          title="Buduj"
-        />
-      </View>
+      <BuildingSection
+        value={villages}
+        setValue={setVillages}
+        build={buildVillage}
+        type="village"
+      />
+      <BuildingSection
+        value={towns}
+        setValue={setTowns}
+        build={buildTown}
+        type="town"
+      />
 
-      <View style={styles.build}>
-        <ThemedText>Miasta ({towns})</ThemedText>
-        <Slider
-          style={{ width: 200, height: 40 }}
-          value={towns}
-          onValueChange={setTowns}
-          minimumValue={0}
-          step={1}
-          maximumValue={MAX_TOWNS}
-        />
-        <Button disabled={!canBuildTown} onPress={buildTown} title="Buduj" />
-      </View>
-
-      <ThemedText>Punktów zwycięstwa do wygrania ({max})</ThemedText>
-      <Slider
-        style={{ width: 200, height: 40 }}
+      <SliderSection
+        label={`Punktów zwycięstwa do wygrania (${victoryPointsFromCards})`}
         value={max}
         onValueChange={setMax}
         minimumValue={0}
-        step={1}
         maximumValue={20}
       />
 
       <View style={{ flexWrap: "wrap", flexDirection: "row" }}>
-        <View style={styles.gridItem}>
-          <Switch
-            trackColor={{ false: "#767577", true: "#81b0ff" }}
-            ios_backgroundColor="#3e3e3e"
-            onValueChange={setIsShoe}
-            value={isShoe}
-          />
-          <ThemedText>But {isShoe ? "(-1)" : ""}</ThemedText>
-        </View>
-
-        <View style={styles.gridItem}>
-          <Switch
-            trackColor={{ false: "#767577", true: "#81b0ff" }}
-            ios_backgroundColor="#3e3e3e"
-            onValueChange={setIsLongestRoad}
-            value={isLongestRoad}
-          />
-          <ThemedText>Drogi {isLongestRoad ? "(+2)" : ""}</ThemedText>
-        </View>
-
-        <View style={styles.gridItem}>
-          <Switch
-            trackColor={{ false: "#767577", true: "#81b0ff" }}
-            ios_backgroundColor="#3e3e3e"
-            onValueChange={setIsMostKnights}
-            value={isMostKnights}
-          />
-          <ThemedText>Rycerze {isMostKnights ? "(+2)" : ""}</ThemedText>
-        </View>
-
-        <View style={styles.gridItem}>
-          <Switch
-            trackColor={{ false: "#767577", true: "#81b0ff" }}
-            ios_backgroundColor="#3e3e3e"
-            onValueChange={setIsMostPorts}
-            value={isMostPorts}
-          />
-          <ThemedText>Porty {isMostPorts ? "(+2)" : ""}</ThemedText>
-        </View>
+        <SwitchSection
+          onValueChange={setIsShoe}
+          value={isShoe}
+          label="But"
+          modifier="-1"
+        />
+        <SwitchSection
+          onValueChange={setIsLongestRoad}
+          value={isLongestRoad}
+          label="Drogi"
+          modifier="+2"
+        />
+        <SwitchSection
+          onValueChange={setIsMostKnights}
+          value={isMostKnights}
+          label="Rycerze"
+          modifier="+2"
+        />
+        <SwitchSection
+          onValueChange={setIsMostPorts}
+          value={isMostPorts}
+          label="Porty"
+          modifier="+2"
+        />
       </View>
 
-      <ThemedText>
-        Punktów zwycięstwa z kart {victoryPointsFromCards}
-      </ThemedText>
-      <Slider
-        style={{ width: 200, height: 40 }}
+      <SliderSection
+        label={`Punktów zwycięstwa z kart (${victoryPointsFromCards})`}
         value={victoryPointsFromCards}
         onValueChange={setVictoryPointsFromCards}
         minimumValue={0}
-        step={1}
         maximumValue={3}
       />
 
@@ -196,43 +129,22 @@ export const BaseScreen = ({ label }: Props) => {
         selectedId={wealthStatus}
       />
 
-      <ThemedText style={styles.bigText}>
-        Punkty zwycięstwa: {victoryPoints}
-      </ThemedText>
-      <ThemedText style={styles.bigText}>
-        {didWin ? "Wygrałeś!" : `Brakuje: ${max - victoryPoints}`}
-      </ThemedText>
+      <VictorySection max={max} victoryPoints={victoryPoints} />
     </AppContainer>
   );
 };
 
-const BlueScreen = () => <BaseScreen label="Niebieski" />;
-export default BlueScreen;
-
 const styles = StyleSheet.create({
-  build: {
-    flexDirection: "row",
-    gap: 8,
-    alignItems: "center",
-  },
   titleContainer: {
     flexDirection: "row",
     alignItems: "center",
     gap: 8,
   },
-  gridItem: {
-    flexDirection: "row",
-    gap: 8,
-    marginTop: 8,
-    alignItems: "center",
-    width: "50%",
-  },
   stepContainer: {
     gap: 8,
     marginBottom: 8,
   },
-  bigText: {
-    fontWeight: "bold",
-    fontSize: 24,
-  },
 });
+
+const BlueScreen = () => <BaseScreen label="Niebieski" />;
+export default BlueScreen;
