@@ -4,13 +4,9 @@ import React from "react";
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
+import { gameStore } from "@/state/GameStore";
 
 const tabs = [
-  {
-    name: "index",
-    title: "Ustawienia",
-    color: "white",
-  },
   {
     name: "blue",
     title: "Niebieski",
@@ -35,6 +31,7 @@ const tabs = [
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const game = gameStore();
 
   return (
     <Tabs
@@ -43,16 +40,35 @@ export default function TabLayout() {
         headerShown: false,
       }}
     >
+      <Tabs.Screen
+        name="index"
+        options={{
+          title: "Ustawienia",
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon
+              name={focused ? "home" : "home-outline"}
+              color="white"
+            />
+          ),
+        }}
+      />
       {tabs.map((tab) => (
         <Tabs.Screen
           key={tab.name}
           name={tab.name}
+          listeners={{
+            tabPress: (e) => {
+              if (game.getIsPlaying(tab.name)) return;
+
+              e.preventDefault();
+            },
+          }}
           options={{
             title: tab.title,
             tabBarIcon: ({ color, focused }) => (
               <TabBarIcon
                 name={focused ? "home" : "home-outline"}
-                color={tab.color}
+                color={game.getIsPlaying(tab.name) ? tab.color : "gray"}
               />
             ),
           }}

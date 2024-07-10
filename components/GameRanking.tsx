@@ -4,8 +4,10 @@ import { ThemedText } from "@/components/ThemedText";
 import { PlayerState } from "@/state/PlayerState";
 import { Player } from "@/types/Player";
 import { useMemo } from "react";
+import { gameStore } from "@/state/GameStore";
 
 export const GameRanking = () => {
+  const game = gameStore();
   const blue = playerStore.blue();
   const orange = playerStore.orange();
   const white = playerStore.white();
@@ -29,9 +31,11 @@ export const GameRanking = () => {
     return result;
   }, [blue, orange, white, red]);
 
+  const filteredSorted = sorted.filter((x) => game.players.includes(x.label));
+
   return (
     <View>
-      {sorted.map((x) => (
+      {filteredSorted.map((x) => (
         <ThemedText key={x.label}>
           {x.label}: {x.score}
         </ThemedText>

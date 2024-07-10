@@ -10,7 +10,7 @@ import { SwitchSection } from "@/components/SwitchSection";
 import { SliderSection } from "@/components/SliderSection";
 import { VictorySection } from "@/components/VictorySection";
 import { BuildingSection } from "@/components/BuildingSection";
-import { radioButtons } from "@/constants/radioButtons";
+import { radioButtons } from "@/constants/RadioButtons";
 import { playerStore } from "@/state/PlayerStore";
 import { Player } from "@/types/Player";
 import { GameRanking } from "@/components/GameRanking";
