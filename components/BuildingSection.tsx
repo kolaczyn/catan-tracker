@@ -3,7 +3,6 @@ import Slider from "@react-native-community/slider";
 import { Button, StyleSheet, View } from "react-native";
 import { BuildingType } from "@/types/BuildingType";
 import { buildingSettings } from "@/consts";
-import { vibrate } from "@/utils/vibrate";
 
 type Props = {
   value: number;

@@ -1,5 +1,5 @@
-import type { PropsWithChildren, ReactElement } from "react";
-import { StyleSheet, useColorScheme } from "react-native";
+import type { PropsWithChildren } from "react";
+import { StyleSheet } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 
 import { ThemedView } from "@/components/ThemedView";

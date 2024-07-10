@@ -3,9 +3,7 @@ import { StyleSheet, View } from "react-native";
 import AppContainer from "@/components/AppContainer";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
-import { useMemo, useState } from "react";
 import RadioGroup from "react-native-radio-buttons-group";
-import { boolToInt } from "@/utils/boolToInt";
 import { vibrate } from "@/utils/vibrate";
 import { WealthStatus } from "@/types/WealthStatus";
 import { SwitchSection } from "@/components/SwitchSection";
@@ -13,15 +11,17 @@ import { SliderSection } from "@/components/SliderSection";
 import { VictorySection } from "@/components/VictorySection";
 import { BuildingSection } from "@/components/BuildingSection";
 import { radioButtons } from "@/constants/radioButtons";
-import { usePlayerStore } from "@/state/PlayerStore";
+import { playerStore } from "@/state/PlayerStore";
 import { calcVictoryPoints } from "@/utils/calcVictoryPoints";
+import { Player } from "@/types/Player";
 
 type Props = {
+  player: Player;
   label: string;
 };
 
-export const ScoreForm = ({ label }: Props) => {
-  const state = usePlayerStore();
+export const ScoreForm = ({ player, label }: Props) => {
+  const state = playerStore[player]();
 
   const buildVillage = () => {
     state.buildVillage();
