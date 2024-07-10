@@ -3,8 +3,9 @@ import AppContainer from "@/components/AppContainer";
 import { SliderSection } from "@/components/SliderSection";
 import { gameStore } from "@/state/GameStore";
 import { players } from "@/constants/Players";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Button } from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox/lib";
+import { SwitchSection } from "@/components/SwitchSection";
 
 export const SettingsScreen = () => {
   const state = gameStore();
@@ -18,6 +19,7 @@ export const SettingsScreen = () => {
         onValueChange={state.setMax}
         minimumValue={0}
         maximumValue={20}
+        disabled={state.isOn}
       />
 
       <ThemedText>Gracze</ThemedText>
@@ -26,10 +28,35 @@ export const SettingsScreen = () => {
           <BouncyCheckbox
             isChecked={state.players.includes(player)}
             onPress={() => state.togglePlayer(player)}
+            disabled={state.isOn}
           />
           <ThemedText>{player}</ThemedText>
         </View>
       ))}
+
+      <View>
+        <ThemedText>Modyfikatory</ThemedText>
+
+        <SwitchSection
+          onValueChange={state.setShoe}
+          value={state.shoe}
+          label="But"
+          modifier=""
+          disabled={state.isOn}
+        />
+        <SwitchSection
+          onValueChange={state.setPorts}
+          value={state.ports}
+          label="Porty"
+          modifier=""
+          disabled={state.isOn}
+        />
+      </View>
+
+      <Button
+        title={state.isOn ? "Zatrzymaj grę" : "Rozpocznij grę"}
+        onPress={state.toggleIsOn}
+      />
     </AppContainer>
   );
 };

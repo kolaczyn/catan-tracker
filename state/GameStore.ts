@@ -17,6 +17,20 @@ export const gameStore = create<GameState>()((set, get) => ({
       return { players };
     });
   },
-
   getIsPlaying: (player: string) => get().players.some((x) => x === player),
+
+  shoe: false,
+  setShoe: (shoe: boolean) => {
+    set({ shoe });
+  },
+
+  ports: true,
+  setPorts: (ports: boolean) => {
+    set({ ports });
+  },
+
+  isOn: false,
+  toggleIsOn: () => {
+    set((state) => ({ isOn: !state.isOn }));
+  },
 }));

@@ -14,6 +14,7 @@ import { radioButtons } from "@/constants/RadioButtons";
 import { playerStore } from "@/state/PlayerStore";
 import { Player } from "@/types/Player";
 import { GameRanking } from "@/components/GameRanking";
+import { gameStore } from "@/state/GameStore";
 
 type Props = {
   player: Player;
@@ -22,6 +23,7 @@ type Props = {
 
 export const ScoreForm = ({ player, label }: Props) => {
   const state = playerStore[player]();
+  const gameState = gameStore();
 
   const buildVillage = () => {
     state.buildVillage();
@@ -55,12 +57,14 @@ export const ScoreForm = ({ player, label }: Props) => {
       />
 
       <View style={{ flexWrap: "wrap", flexDirection: "row" }}>
-        <SwitchSection
-          onValueChange={state.setIsShoe}
-          value={state.isShoe}
-          label="But"
-          modifier="-1"
-        />
+        {gameState.shoe && (
+          <SwitchSection
+            onValueChange={state.setIsShoe}
+            value={state.isShoe}
+            label="But"
+            modifier="-1"
+          />
+        )}
         <SwitchSection
           onValueChange={state.setIsLongestRoad}
           value={state.isLongestRoad}
@@ -73,12 +77,14 @@ export const ScoreForm = ({ player, label }: Props) => {
           label="Rycerze"
           modifier="+2"
         />
-        <SwitchSection
-          onValueChange={state.setIsMostPorts}
-          value={state.isMostPorts}
-          label="Porty"
-          modifier="+2"
-        />
+        {gameState.ports && (
+          <SwitchSection
+            onValueChange={state.setIsMostPorts}
+            value={state.isMostPorts}
+            label="Porty"
+            modifier="+2"
+          />
+        )}
       </View>
 
       <SliderSection
