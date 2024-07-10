@@ -1,4 +1,4 @@
-import { BaseScreen } from "@/app/(tabs)/index";
+import { ScoreForm } from "@/components/ScoreForm";
 
-const RedScreen = () => <BaseScreen label="Czerwony" />;
+const RedScreen = () => <ScoreForm label="Czerwony" />;
 export default RedScreen;

@@ -1,4 +1,4 @@
-import { BaseScreen } from "@/app/(tabs)/index";
+import { ScoreForm } from "@/components/ScoreForm";
 
-const WhiteScreen = () => <BaseScreen label="Biały" />;
+const WhiteScreen = () => <ScoreForm label="Biały" />;
 export default WhiteScreen;

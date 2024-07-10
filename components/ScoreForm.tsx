@@ -18,7 +18,7 @@ type Props = {
   label: string;
 };
 
-export const BaseScreen = ({ label }: Props) => {
+export const ScoreForm = ({ label }: Props) => {
   const [villages, setVillages] = useState(0);
   const [towns, setTowns] = useState(0);
   const [max, setMax] = useState(10);
@@ -145,6 +145,3 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
 });
-
-const BlueScreen = () => <BaseScreen label="Niebieski" />;
-export default BlueScreen;
