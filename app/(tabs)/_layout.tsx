@@ -5,6 +5,29 @@ import { TabBarIcon } from "@/components/navigation/TabBarIcon";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
 
+const tabs = [
+  {
+    name: "index",
+    title: "Niebieski",
+    color: "#62B6CB",
+  },
+  {
+    name: "orange",
+    title: "Pomarańczowy",
+    color: "#F0A202",
+  },
+  {
+    name: "white",
+    title: "Biały",
+    color: "#decdf5",
+  },
+  {
+    name: "red",
+    title: "Czerwony",
+    color: "#E84855",
+  },
+];
+
 export default function TabLayout() {
   const colorScheme = useColorScheme();
 
@@ -15,55 +38,21 @@ export default function TabLayout() {
         headerShown: false,
       }}
     >
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: "Niebieski",
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon
-              name={focused ? "home" : "home-outline"}
-              color={color}
-            />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="orange"
-        options={{
-          title: "Pomarańczowy",
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon
-              name={focused ? "home" : "home-outline"}
-              color={color}
-            />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="white"
-        options={{
-          title: "Biały",
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon
-              name={focused ? "home" : "home-outline"}
-              color={color}
-            />
-          ),
-        }}
-      />
-
-      <Tabs.Screen
-        name="red"
-        options={{
-          title: "Czerwony",
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon
-              name={focused ? "home" : "home-outline"}
-              color={color}
-            />
-          ),
-        }}
-      />
+      {tabs.map((tab) => (
+        <Tabs.Screen
+          key={tab.name}
+          name={tab.name}
+          options={{
+            title: tab.title,
+            tabBarIcon: ({ color, focused }) => (
+              <TabBarIcon
+                name={focused ? "home" : "home-outline"}
+                color={tab.color}
+              />
+            ),
+          }}
+        />
+      ))}
     </Tabs>
   );
 }
