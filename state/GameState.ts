@@ -10,10 +10,17 @@ export type GameState = {
 
   shoe: boolean;
   setShoe: (shoe: boolean) => void;
+  shoePlayer: Player | null;
+  toggleShoePlayer: (player: Player | null) => void;
 
   ports: boolean;
   setPorts: (ports: boolean) => void;
+  portPlayer: Player | null;
+  togglePortPlayer: (player: Player | null) => void;
 
-  isOn: boolean;
-  toggleIsOn: () => void;
+  knightsPlayer: Player | null;
+  toggleKnightsPlayer: (player: Player | null) => void;
+
+  roadsPlayer: Player | null;
+  toggleRoadsPlayer: (player: Player | null) => void;
 };

@@ -19,16 +19,14 @@ export const SettingsScreen = () => {
         onValueChange={state.setMax}
         minimumValue={0}
         maximumValue={20}
-        disabled={state.isOn}
       />
 
       <ThemedText>Gracze</ThemedText>
       {players.map((player) => (
-        <View style={styles.checkboxContainer}>
+        <View key={player} style={styles.checkboxContainer}>
           <BouncyCheckbox
             isChecked={state.players.includes(player)}
             onPress={() => state.togglePlayer(player)}
-            disabled={state.isOn}
           />
           <ThemedText>{player}</ThemedText>
         </View>
@@ -42,21 +40,14 @@ export const SettingsScreen = () => {
           value={state.shoe}
           label="But"
           modifier=""
-          disabled={state.isOn}
         />
         <SwitchSection
           onValueChange={state.setPorts}
           value={state.ports}
           label="Porty"
           modifier=""
-          disabled={state.isOn}
         />
       </View>
-
-      <Button
-        title={state.isOn ? "Zatrzymaj grę" : "Rozpocznij grę"}
-        onPress={state.toggleIsOn}
-      />
     </AppContainer>
   );
 };

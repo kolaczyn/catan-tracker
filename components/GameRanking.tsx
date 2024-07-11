@@ -13,7 +13,7 @@ export const GameRanking = () => {
   const white = playerStore.white();
   const red = playerStore.red();
 
-  const sorted = useMemo(() => {
+  const sorted = (() => {
     const result = (
       [
         [blue, "blue"],
@@ -29,7 +29,7 @@ export const GameRanking = () => {
 
     result.sort((a, b) => b.score - a.score);
     return result;
-  }, [blue, orange, white, red]);
+  })();
 
   const filteredSorted = sorted.filter((x) => game.players.includes(x.label));
 

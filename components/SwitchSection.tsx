@@ -6,7 +6,6 @@ type Props = {
   value: boolean;
   label: string;
   modifier: string;
-  disabled?: boolean;
 };
 
 export const SwitchSection = ({
@@ -14,7 +13,6 @@ export const SwitchSection = ({
   value,
   onValueChange,
   modifier,
-  disabled = false,
 }: Props) => {
   return (
     <View style={styles.gridItem}>
@@ -23,7 +21,6 @@ export const SwitchSection = ({
         ios_backgroundColor="#3e3e3e"
         onValueChange={onValueChange}
         value={value}
-        disabled={disabled}
       />
       <ThemedText>
         {label} {modifier && value && <> ({modifier})</>}

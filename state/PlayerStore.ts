@@ -2,9 +2,12 @@ import { create, StoreApi, UseBoundStore } from "zustand";
 import { PlayerState } from "@/state/PlayerState";
 import { Player } from "@/types/Player";
 import { boolToInt } from "@/utils/boolToInt";
+import { gameStore } from "@/state/GameStore";
 
-export const createPlayerStore = () =>
+export const createPlayerStore = (player: Player) =>
   create<PlayerState>()((set, get) => ({
+    player,
+
     villages: 0,
     towns: 0,
     isLongestRoad: false,
@@ -30,18 +33,6 @@ export const createPlayerStore = () =>
     setVillages: (villages) => {
       set({ villages });
     },
-    setIsShoe: (isShoe) => {
-      set({ isShoe });
-    },
-    setIsLongestRoad: (isLongestRoad) => {
-      set({ isLongestRoad });
-    },
-    setIsMostKnights: (isMostKnights) => {
-      set({ isMostKnights });
-    },
-    setIsMostPorts: (isMostPorts) => {
-      set({ isMostPorts });
-    },
     setVictoryPointsFromCards: (victoryPointsFromCards) => {
       set({ victoryPointsFromCards });
     },
@@ -57,25 +48,30 @@ export const createPlayerStore = () =>
     },
 
     getVictoryPoints() {
+      const gameState = gameStore.getState();
+      const isMostPorts = gameState.portPlayer === player;
+      const isLongestRoad = gameState.roadsPlayer === player;
+      const isMostKnights = gameState.knightsPlayer === player;
+      const isShoe = gameState.shoePlayer === player;
       const s = get();
 
       return (
         s.villages +
         2 * s.towns +
         s.getWealthPoints() +
-        2 * boolToInt(s.isLongestRoad) +
-        2 * boolToInt(s.isMostKnights) +
-        2 * boolToInt(s.isMostPorts) +
+        2 * boolToInt(isLongestRoad) +
+        2 * boolToInt(isMostKnights) +
+        2 * boolToInt(isMostPorts) +
         s.victoryPointsFromCards +
-        -1 * boolToInt(s.isShoe)
+        -1 * boolToInt(isShoe)
       );
     },
   }));
 
-const useBluePlayerStore = createPlayerStore();
-const useOrangePlayerStore = createPlayerStore();
-const useWhitePlayerStore = createPlayerStore();
-const useRedPlayerStore = createPlayerStore();
+const useBluePlayerStore = createPlayerStore("blue");
+const useOrangePlayerStore = createPlayerStore("orange");
+const useWhitePlayerStore = createPlayerStore("white");
+const useRedPlayerStore = createPlayerStore("red");
 
 export const playerStore: Record<
   Player,

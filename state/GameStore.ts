@@ -23,14 +23,27 @@ export const gameStore = create<GameState>()((set, get) => ({
   setShoe: (shoe: boolean) => {
     set({ shoe });
   },
+  shoePlayer: null,
+  toggleShoePlayer: (player: Player | null) => {
+    set({ shoePlayer: get().shoePlayer === player ? null : player });
+  },
 
   ports: true,
   setPorts: (ports: boolean) => {
     set({ ports });
   },
+  portPlayer: null,
+  togglePortPlayer: (player: Player | null) => {
+    set({ portPlayer: get().portPlayer === player ? null : player });
+  },
 
-  isOn: false,
-  toggleIsOn: () => {
-    set((state) => ({ isOn: !state.isOn }));
+  knightsPlayer: null,
+  toggleKnightsPlayer: (player: Player | null) => {
+    set({ knightsPlayer: get().knightsPlayer === player ? null : player });
+  },
+
+  roadsPlayer: null,
+  toggleRoadsPlayer: (player: Player | null) => {
+    set({ roadsPlayer: get().roadsPlayer === player ? null : player });
   },
 }));

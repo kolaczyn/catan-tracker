@@ -8,7 +8,6 @@ type Props = {
   onValueChange: (value: number) => void;
   minimumValue: number;
   maximumValue: number;
-  disabled?: boolean;
 };
 
 export const SliderSection = ({
@@ -17,13 +16,11 @@ export const SliderSection = ({
   onValueChange,
   minimumValue,
   maximumValue,
-  disabled = false,
 }: Props) => {
   return (
     <View>
       <ThemedText>{label}</ThemedText>
       <Slider
-        disabled={disabled}
         style={{ width: 200, height: 40 }}
         value={value}
         onValueChange={onValueChange}

@@ -22,20 +22,20 @@ type Props = {
 };
 
 export const ScoreForm = ({ player, label }: Props) => {
-  const state = playerStore[player]();
+  const playerState = playerStore[player]();
   const gameState = gameStore();
 
   const buildVillage = () => {
-    state.buildVillage();
+    playerState.buildVillage();
     vibrate();
   };
 
   const buildTown = () => {
-    state.buildTown();
+    playerState.buildTown();
     vibrate();
   };
 
-  const victoryPoints = state.getVictoryPoints();
+  const victoryPoints = playerState.getVictoryPoints();
 
   return (
     <AppContainer>
@@ -44,14 +44,14 @@ export const ScoreForm = ({ player, label }: Props) => {
       </ThemedView>
 
       <BuildingSection
-        value={state.villages}
-        setValue={state.setVillages}
+        value={playerState.villages}
+        setValue={playerState.setVillages}
         build={buildVillage}
         type="village"
       />
       <BuildingSection
-        value={state.towns}
-        setValue={state.setTowns}
+        value={playerState.towns}
+        setValue={playerState.setTowns}
         build={buildTown}
         type="town"
       />
@@ -59,28 +59,28 @@ export const ScoreForm = ({ player, label }: Props) => {
       <View style={{ flexWrap: "wrap", flexDirection: "row" }}>
         {gameState.shoe && (
           <SwitchSection
-            onValueChange={state.setIsShoe}
-            value={state.isShoe}
+            onValueChange={() => gameState.toggleShoePlayer(player)}
+            value={gameState.shoePlayer === player}
             label="But"
             modifier="-1"
           />
         )}
         <SwitchSection
-          onValueChange={state.setIsLongestRoad}
-          value={state.isLongestRoad}
+          onValueChange={() => gameState.toggleRoadsPlayer(player)}
+          value={gameState.roadsPlayer === player}
           label="Drogi"
           modifier="+2"
         />
         <SwitchSection
-          onValueChange={state.setIsMostKnights}
-          value={state.isMostKnights}
+          onValueChange={() => gameState.toggleKnightsPlayer(player)}
+          value={gameState.knightsPlayer === player}
           label="Rycerze"
           modifier="+2"
         />
         {gameState.ports && (
           <SwitchSection
-            onValueChange={state.setIsMostPorts}
-            value={state.isMostPorts}
+            onValueChange={() => gameState.togglePortPlayer(player)}
+            value={gameState.portPlayer === player}
             label="Porty"
             modifier="+2"
           />
@@ -88,22 +88,22 @@ export const ScoreForm = ({ player, label }: Props) => {
       </View>
 
       <SliderSection
-        label={`Punktów zwycięstwa z kart (${state.victoryPointsFromCards})`}
-        value={state.victoryPointsFromCards}
-        onValueChange={state.setVictoryPointsFromCards}
+        label={`Punktów zwycięstwa z kart (${playerState.victoryPointsFromCards})`}
+        value={playerState.victoryPointsFromCards}
+        onValueChange={playerState.setVictoryPointsFromCards}
         minimumValue={0}
         maximumValue={3}
       />
 
-      <ThemedText>Bogactwo ({state.getWealthPoints()})</ThemedText>
+      <ThemedText>Bogactwo ({playerState.getWealthPoints()})</ThemedText>
       <RadioGroup
         radioButtons={radioButtons}
         layout="row"
         containerStyle={{
           backgroundColor: "white",
         }}
-        onPress={(x) => state.setWealthStatus(x as WealthStatus)}
-        selectedId={state.wealthStatus}
+        onPress={(x) => playerState.setWealthStatus(x as WealthStatus)}
+        selectedId={playerState.wealthStatus}
       />
 
       <VictorySection victoryPoints={victoryPoints} />
