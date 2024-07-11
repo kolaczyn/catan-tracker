@@ -13,10 +13,10 @@ export type GameState = {
   shoePlayer: Player | null;
   toggleShoePlayer: (player: Player | null) => void;
 
-  ports: boolean;
-  setPorts: (ports: boolean) => void;
-  portPlayer: Player | null;
-  togglePortPlayer: (player: Player | null) => void;
+  harbors: boolean;
+  setHarbors: (harbors: boolean) => void;
+  harborPlayer: Player | null;
+  toggleHarborPlayer: (player: Player | null) => void;
 
   knightsPlayer: Player | null;
   toggleKnightsPlayer: (player: Player | null) => void;

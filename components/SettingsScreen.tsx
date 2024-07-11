@@ -42,8 +42,8 @@ export const SettingsScreen = () => {
           modifier=""
         />
         <SwitchSection
-          onValueChange={state.setPorts}
-          value={state.ports}
+          onValueChange={state.setHarbors}
+          value={state.harbors}
           label="Porty"
           modifier=""
         />

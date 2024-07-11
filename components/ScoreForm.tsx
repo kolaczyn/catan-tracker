@@ -77,10 +77,10 @@ export const ScoreForm = ({ player, label }: Props) => {
           label="Rycerze"
           modifier="+2"
         />
-        {gameState.ports && (
+        {gameState.harbors && (
           <SwitchSection
-            onValueChange={() => gameState.togglePortPlayer(player)}
-            value={gameState.portPlayer === player}
+            onValueChange={() => gameState.toggleHarborPlayer(player)}
+            value={gameState.harborPlayer === player}
             label="Porty"
             modifier="+2"
           />

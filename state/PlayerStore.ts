@@ -10,9 +10,6 @@ export const createPlayerStore = (player: Player) =>
 
     villages: 0,
     towns: 0,
-    isLongestRoad: false,
-    isMostKnights: false,
-    isMostPorts: false,
     isShoe: false,
     victoryPointsFromCards: 0,
     wealthStatus: "neutral",
@@ -49,7 +46,7 @@ export const createPlayerStore = (player: Player) =>
 
     getVictoryPoints() {
       const gameState = gameStore.getState();
-      const isMostPorts = gameState.portPlayer === player;
+      const isMostHarbors = gameState.harborPlayer === player;
       const isLongestRoad = gameState.roadsPlayer === player;
       const isMostKnights = gameState.knightsPlayer === player;
       const isShoe = gameState.shoePlayer === player;
@@ -61,7 +58,7 @@ export const createPlayerStore = (player: Player) =>
         s.getWealthPoints() +
         2 * boolToInt(isLongestRoad) +
         2 * boolToInt(isMostKnights) +
-        2 * boolToInt(isMostPorts) +
+        2 * boolToInt(isMostHarbors) +
         s.victoryPointsFromCards +
         -1 * boolToInt(isShoe)
       );

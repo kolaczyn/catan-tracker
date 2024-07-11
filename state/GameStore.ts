@@ -28,13 +28,13 @@ export const gameStore = create<GameState>()((set, get) => ({
     set({ shoePlayer: get().shoePlayer === player ? null : player });
   },
 
-  ports: true,
-  setPorts: (ports: boolean) => {
-    set({ ports });
+  harbors: true,
+  setHarbors: (harbors: boolean) => {
+    set({ harbors });
   },
-  portPlayer: null,
-  togglePortPlayer: (player: Player | null) => {
-    set({ portPlayer: get().portPlayer === player ? null : player });
+  harborPlayer: null,
+  toggleHarborPlayer: (player: Player | null) => {
+    set({ harborPlayer: get().harborPlayer === player ? null : player });
   },
 
   knightsPlayer: null,
